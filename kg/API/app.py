@@ -18,8 +18,8 @@ from flask import Flask, render_template
 
 UPLOAD_FOLDER = 'upload_folder'
 ALLOWED_EXTENSIONS = {'ttl'}
-bp = Blueprint('burritos', __name__,
-                        template_folder='templates')
+# bp = Blueprint('burritos', __name__,
+#                         template_folder='templates')
 app = Flask(__name__)
 
 
@@ -44,7 +44,7 @@ def before_request():
         return jsonify(headers), 200
 
 
-@bp.route('/')
+@app.route('/')
 def home():
     nodes, links, all_ids = connector2.get_general_graph()
     nodes_dict = [node.to_dict() for node in nodes]
@@ -55,7 +55,7 @@ def home():
     return render_template('index.html', data=data, all_ids=all_ids)
 
 
-@bp.route('/search', methods=['GET'])
+@app.route('/search', methods=['GET'])
 def search():
     print(request)
     search_str = request.args.get('search')
@@ -69,7 +69,7 @@ def search():
     return render_template('index.html', data=data, all_ids=all_ids)
 
 
-@bp.route('/expand_node_2', methods=['POST'])
+@app.route('/expand_node_2', methods=['POST'])
 def expand_node_2():
     data = request.get_json()
     logger.info(f"expand node {data}")
@@ -81,7 +81,7 @@ def expand_node_2():
     }, indent=4)
 
 
-@bp.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
     print("Current working directory:", os.getcwd())
     if 'file' not in request.files:
@@ -96,7 +96,8 @@ def upload_file():
         load_file_db(file_path)
         return redirect('/')
 
-app.register_blueprint(bp, url_prefix='/abc')
+#app.register_blueprint(bp, url_prefix='/abc')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5005)  # , debug=True)
+    #app.run(host='0.0.0.0', port=5005)  # , debug=True)
+    app.run(port=5005)  # , debug=True)

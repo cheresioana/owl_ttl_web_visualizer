@@ -115,7 +115,7 @@
                 <div id="kt_header_search" class="header-search d-flex align-items-center w-100 ms-12 pe-15" data-kt-search-keypress="true" data-kt-search-min-length="2" data-kt-search-enter="enter" data-kt-search-layout="menu" data-kt-search-responsive="true" data-kt-menu-trigger="auto" data-kt-menu-permanent="true" data-kt-menu-placement="bottom-start">
                     <!--begin::Form(use d-none d-lg-block classes for responsive search)-->
                     <form data-kt-search-element="form" class="d-lg-block w-100 position-relative mb-5 mb-lg-0" autocomplete="off"
-                          action="{{ url_for('burritos.search') }}" method="get" id="searchForm" enctype="multipart/form-data">
+                          action="{{ url_for('search') }}" method="get" id="searchForm" enctype="multipart/form-data">
                         <!--begin::Icon-->
                         <i class="ki-outline ki-magnifier search-icon fs-2 text-gray-500 position-absolute top-50 translate-middle-y ms-5"></i>
                         <!--end::Icon-->
@@ -182,7 +182,7 @@
                             <span class="fs-6 fw-semibold text-gray-500">
                                 Choose a ttl file to visualize
                             </span>
-                            <form method="POST" action="{{ url_for('burritos.upload_file') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url_for('upload_file') }}" enctype="multipart/form-data">
                                 <input type="file" name="file" class="btn btn-secondary">
                                 <input type="submit" value="Upload" class="btn btn-secondary">
                             </form>
@@ -325,15 +325,23 @@
 
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-<script src="//unpkg.com/three"></script>
-<script src="//unpkg.com/d3"></script>
+{#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>#}
+ <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+{#<script src="https://unpkg.com/three@0.136.0/build/three.min.js"></script>#}
+ <script src="{{ url_for('static', filename='js/three.min.js') }}"></script>
+{#<script src="//unpkg.com/d3"></script>#}
+ <script src="{{ url_for('static', filename='js/d3.min.js') }}"></script>
 <script src="{{ url_for('static', filename='/layout/graph/js/3d-force-graph.min.js')}}"></script>
+{# <script src="{{ url_for('static', filename='js/3d-force-graph.min.js') }}"></script>#}
 
-<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+{#<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>#}
+ <script src="{{ url_for('static', filename='js/plotly-latest.min.js') }}"></script>
 <script type="importmap">{ "imports": { "three": "https://unpkg.com/three/build/three.module.js" }}</script>
+
+  <script src="{{ url_for('static', filename='js/three-module.js') }}"></script>
 <script type="module"></script>
-<script src="//unpkg.com/three-spritetext"></script>
+  <script src="{{ url_for('static', filename='js/three-spritetext.min.js') }}"></script>
+{#<script src="//unpkg.com/three-spritetext"></script>#}
 
  <script>
 
@@ -341,6 +349,7 @@
       var query_id = 1;
       var all_ids = {{ all_ids | tojson }};
       var current_results =all_ids
+      console.log('All data')
          console.log(all_data);
         console.log(query_id);
         console.log(all_ids);
